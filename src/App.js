@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react'; 
 import SiteBar from './Home/Navbar'; 
 import Auth from './Auth/Auth'; 
+import WorkoutIndex from './workouts/WorkoutIndex';
 
 function App() {
   const [sessionToken, setSessionToken] = useState(''); // since our sessionToken will change during the course of our app running( it will start empty, be given a value upon logging in, then emptied upon logout), setSessionToken allows us to change our 1st state variable
@@ -18,10 +19,19 @@ function App() {
     console.log(sessionToken); 
   }
 
+  const clearToken = () => {
+    localStorage.clear(); 
+    setSessionToken(''); 
+  }
+
+  const protectedViews = () => {
+    return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken}/> : <Auth updateToken={updateToken}/>)
+  }
+
   return (
     <div>
-      <SiteBar />
-      <Auth updateToken={updateToken}/>
+      <SiteBar clickLogout={clearToken}/> 
+      {protectedViews()}
     </div>
   );
 }

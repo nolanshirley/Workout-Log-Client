@@ -7,9 +7,9 @@ const Signup = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // we are preventing the page from refreshing when we submit the form 
-        fetch('http://localhost:8000/user/signup', {
+        fetch('http://localhost:8000/user/signup', { 
             method: 'POST', 
-            body: JSON.stringify({user: {email: email, password: password}}), 
+            body: JSON.stringify({email: email, password: password}), 
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
@@ -28,6 +28,7 @@ const Signup = (props) => {
                 <FormGroup>
                     <Label htmlFor="password"> Password </Label>
                     <Input onChange={(e) => setPassword(e.target.value)} name="password" value={password} />
+                    <h5> {Input ? 'username is required' : 'nice username'} </h5>
                 </FormGroup>
                 <Button type="submit"> Signup </Button>
             </Form>
